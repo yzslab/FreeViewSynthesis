@@ -207,7 +207,11 @@ class Worker(co.mytorch.Worker):
         if mode == "all":
             tgt_ind = None
         elif mode == "subseq":
-            tgt_ind = config.tat_eval_tracks[dset]
+            tgt_ind = []
+            for i in config.tat_eval_tracks[dset]:
+                if i & 1 == 0:
+                    continue
+                tgt_ind.append(i)
         else:
             raise Exception("invalid mode for get_eval_set_tat")
         dset = self.get_pw_dataset(
